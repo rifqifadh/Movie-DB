@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class HomeViewModel: ObservableObject {
   
@@ -19,16 +20,17 @@ class HomeViewModel: ObservableObject {
   
   private var cancellable = Set<AnyCancellable>()
   private let homeUseCase: HomeUseCase
+  private let router = HomeRouter()
   
   @Published private(set) var state = State.idle
   @Published private(set) var discoverMovies: [MovieModel] = []
-  
+  @Published private(set) var homeSection = [HomeSection: [MovieModel]]()
   
   init(homeUseCase: HomeUseCase) {
     self.homeUseCase = homeUseCase
     state = .loading
-
-    homeUseCase.getDiscoverMovies()
+    
+    homeUseCase.getHomeSection()
       .receive(on: RunLoop.main)
       .sink { [weak self] completion in
         switch completion {
@@ -37,8 +39,16 @@ class HomeViewModel: ObservableObject {
         case.failure(let error):
           self?.state = .error(error)
         }
-      } receiveValue: { movies in
-        self.discoverMovies = movies
-      }.store(in: &cancellable)
+      } receiveValue: { value in
+        self.homeSection = value
+      }
+      .store(in: &cancellable)
+  }
+  
+  func linkBuilder<Content: View>(
+    for movie: MovieModel,
+    @ViewBuilder content: () -> Content
+  ) -> some View {
+    NavigationLink(destination: router.makeDetailView(for: movie)) { content() }
   }
 }

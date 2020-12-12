@@ -14,7 +14,7 @@ enum URLError: LocalizedError {
   
   var errorDescription: String? {
     switch self {
-    case .invalidResponse: return "The server responded with garbage."
+    case .invalidResponse: return "Please Check your Internet Connection"
     case .addressUnreachable(let url): return "\(url.absoluteString) is unreachable."
     }
   }

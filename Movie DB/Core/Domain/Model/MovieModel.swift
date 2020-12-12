@@ -25,4 +25,11 @@ struct MovieModel: Equatable, Identifiable {
     TMDB.imageUrl + backdropPath
   }
   let releaseDate: String
+  var releaseDateFormatted: String {
+    let date = releaseDate.toDate()
+    return date.toString(format: "MMM dd,yyyy")
+  }
+  
+  static var `default`: MovieModel { MovieModel(id: 0, title: "Roald Dahl's The Witches", overview: "", voteAverage: 7.1, posterPath: "/betExZlgK0l7CZ9CsCBVcwO1OjL.jpg", backdropPath: "", releaseDate: "")}
+  
 }

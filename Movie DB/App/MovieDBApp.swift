@@ -9,11 +9,10 @@ import SwiftUI
 
 @main
 struct MovieDBApp: App {
-  @StateObject var viewModel = HomeViewModel(homeUseCase: Injection().provideHome())
   
   var body: some Scene {
     WindowGroup {
-      HomeView(viewModel: viewModel)
+      RootView()
     }
   }
 }

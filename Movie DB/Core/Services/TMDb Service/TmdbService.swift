@@ -14,7 +14,7 @@ enum TmdbService {
 }
 
 extension TmdbService: TargetType {
-  var baseURL: URL { return URL(string: TMDB.tmdbURL)! }
+  var baseURL: URL { return TMDB.tmdbURL }
   
   var path: String {
     switch self {
@@ -43,8 +43,7 @@ extension TmdbService: TargetType {
     }
   }
   
-  var headers: [String : String]? {
+  var headers: [String: String]? {
     return ["Content-type": "application/json"]
   }
 }
-

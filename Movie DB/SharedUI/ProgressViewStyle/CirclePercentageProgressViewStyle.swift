@@ -23,14 +23,12 @@ struct CirclePercentageProgressViewStyle: ProgressViewStyle {
           .opacity(0.3)
           .foregroundColor(secondaryColor)
         
-        
         Circle()
           .trim(from: 0.0, to: CGFloat(configuration.fractionCompleted ?? 0))
           .stroke(style: StrokeStyle(lineWidth: strokeWidth, lineCap: .round, lineJoin: .round))
           .foregroundColor(primaryColor)
       }
       .rotationEffect(.degrees(-90))
-      
       
       Text("\(Int((configuration.fractionCompleted ?? 0) * 100))%")
         .font(fontType)

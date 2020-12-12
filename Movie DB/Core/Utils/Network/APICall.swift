@@ -8,7 +8,7 @@
 import Foundation
 
 struct TMDB {
-  static let tmdbURL = "https://api.themoviedb.org/3/"
+  static public let tmdbURL = URL(string: "https://api.themoviedb.org/3/")!
   static let apiKey = "967ad60bd20b9b2102526183323e3c3b"
   static let imageUrl = "https://image.tmdb.org/t/p/w500"
 }
@@ -18,14 +18,28 @@ protocol Endpoint {
 }
 
 enum Endpoints {
-  enum Gets: Endpoint {
-    case discoverMovies
-    
-    public var url: String {
-      switch self {
-      case .discoverMovies:
-        return "\(TMDB.tmdbURL)discover/movie?api_key=\(TMDB.apiKey)&sort_by=popularity.desc"
-      }
+  //  enum Gets: Endpoint {
+  case topRated
+  case nowPlayingMovies
+  case popularMovies
+  case upcomingMovies
+  case detailMovie(id: Int)
+  case credits(id: Int)
+  
+  public func path() -> String {
+    switch self {
+    case .topRated:
+      return "movie/top_rated"
+    case .nowPlayingMovies:
+      return "movie/now_playing"
+    case .popularMovies:
+      return "movie/popular"
+    case .upcomingMovies:
+      return "movie/upcoming"
+    case let .detailMovie(id):
+      return "movie/\(id)"
+    case let .credits(id):
+      return "movie/\(id)/credits"
     }
   }
 }
